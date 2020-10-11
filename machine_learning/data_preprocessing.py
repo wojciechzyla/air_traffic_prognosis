@@ -3,7 +3,7 @@
 import numpy as np
 import os
 import json
-from common_functions import time_difference
+from data_gathering.common_functions import time_difference
 
 
 def load_data():

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import unittest
-import common_functions as cf
+import data_gathering.common_functions as cf
 
 
 class TestFunctions(unittest.TestCase):

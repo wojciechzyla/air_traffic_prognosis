@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import unittest
-import runways_coordinates as rc
+import data_gathering.runways_coordinates as rc
 
 
 class TestFunctionsWithoutWebAcces(unittest.TestCase):
