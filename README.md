@@ -50,15 +50,12 @@ W pętli przechodzącej po lotniskach są wykonywane następujące czynności:
 ## Moduł destination_data.py
 
 Moduł ten zawiera klasę DestinationData. Przy tworzeniu obiektu trzeba podać następujące dane: ścieżkę do chromedriver, kod lotniska oraz datę.
-W metodzie __init__ są wywoływane dwie metody klasowe. Pierwsza z nich get_destination_airport_data() zwraca krotkę z listą przylotów, listą odlotów oraz listą z danymi pogodowymi. Druga metoda destination_data() zwraca listę z informacjami o przylatujących lotach (pogodzie, ruchu lotniczym w momencie przylotu) w oparciu o dane zebrane przez metodę get_destination_airport_data().
+W metodzie __init__ są wywoływane dwie metody klasowe. Pierwsza z nich get_destination_airport_data() zwraca krotkę z listą przylotów, listą odlotów oraz listą z danymi pogodowymi. Druga metoda destination_data() zwraca listę z informacjami o przylatujących lotach (pogodzie, ruchu lotniczym w momencie przylotu) w oparciu o dane zebrane przez metodę get_destination_airport_data().<br /><br />
 
-&nbsp;
-&nbsp;
 **Metoda get_destination_airport_data():**
 
-Na stronie flightradar24.com otwierana jest zakładka Arrivals dla danego lotniska. Pobierane są następnie informacje o wszystkich przylotach z danego dnia. Następnie program przechodzi do zakładki Departures na stronie i pobiera dane o odlotach danego dnia. Na koniec z zakładki Weather są pobierane dane dotyczące pogody z danego dnia. Metoda zwraca krotkę zawierającą trzy listy: arrivals, departure, weather.
+Na stronie flightradar24.com otwierana jest zakładka Arrivals dla danego lotniska. Pobierane są następnie informacje o wszystkich przylotach z danego dnia. Następnie program przechodzi do zakładki Departures na stronie i pobiera dane o odlotach danego dnia. Na koniec z zakładki Weather są pobierane dane dotyczące pogody z danego dnia. Metoda zwraca krotkę zawierającą trzy listy: arrivals, departure, weather.<br /><br />
 
-&nbsp;
 **Metoda destination_data():**
 
 Wykonywana jest pętla po wszystkich lotach przylatujących. Zapisywane są tylko loty posiadające informację o numerze rejestracyjnym oraz czasie lądowania. Pozostałe są wciąż używane do obliczenia ruchu na lotnisku. Ruch na lotnisku dla każdego lotu jest równy ilości planowanych lądowań oraz startów w okresie czasu +/- 30 min od godziny planowanego lądowania. Poszczególne parametry pogodowe dla każdego lotu to średnia tych parametrów mieszczących się w czasie +/- 30 min od czasu planowanego lądowania. Jeśli w tym okresie nie ma dostępnych danych pogodowych to jest wyciągana średnia z dwóch pomiarów - najbliższy przed planowanym lądowaniem oraz najbliższy po planowanym lądowaniu. Metoda zwraca listę słowników z informacjami dotyczącymi pogody i ruchu lotniczego w godzinie przylotu, opóźnieniu, godzinie przylotu, planowanej godzinie przylotu, numerze lotu, numerze rejestracji samolotu.
