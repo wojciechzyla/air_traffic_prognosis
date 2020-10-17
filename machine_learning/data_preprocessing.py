@@ -5,6 +5,14 @@ import os
 import json
 from data_gathering.common_functions import time_difference
 
+class UnknownModelType(Exception):
+    def __init__(self, func, models):
+        if func and models:
+            msg = "{} called with different model_type than {}".format(func, models)
+        else:
+            msg = "Preprocessing function called with wrong model_type"
+        super().__init__(msg)
+
 
 # Load data from from all flights_<number>.json files.
 # Function return list of tuples. Each tuple contains flight info,
@@ -47,19 +55,20 @@ def load_data():
     return input_flights
 
 
-# Function makes data suitable for cnn model. User can specify what type of labels
-# should be specified by providing original_landing_diff. By default it is set to True
-# so there are 10 possible outputs corresponding to different delay ranges (check time_difference_range
-# function from data_gathering.common_functions.py). If original_landing_diff is set to False then there
-# are only 3 outputs (early, +/- 15 min to planned arrival, late). By providing use_coordinates user can
-# specify if airports coordinates should be used in machine learning.
-# Function return training and test data, and output length.
-def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coordinates: bool = True):
+# Function makes data suitable for cnn or feed_forward model depending on network_type variable.
+# User can specify what type of labels should be used by providing original_landing_diff.
+# By default it is set to True, so there are 10 possible outputs corresponding to different delay ranges
+# (check time_difference_range function from data_gathering.common_functions.py).
+# If original_landing_diff is set to False then there are only 3 outputs (early, +/- 15 min to planned arrival, late).
+# Function return training and test data, input dimension and output length.
+def preprocess_for_cnn_or_feed_forward(data: list, network_type: str, original_landing_diff: bool = True):
 
-    if use_coordinates:
-        input_length = len(data[0][0])
+    if network_type == "feed_forward":
+        input_shape = len(data[0][0])
+    elif network_type == "cnn":
+        input_shape = (7, 8, 1)
     else:
-        input_length = len(data[0][0]) - 4
+        raise UnknownModelType("preprocess_for_cnn_or_feed_forward", "cnn or feed_forward")
 
     if original_landing_diff:
         output_length = 10
@@ -78,18 +87,9 @@ def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coord
     for id, el in enumerate(data):
         fl = el[0]
 
-        flight = [fl[0] / 200, fl[1] / 360, fl[2] / 50,
-                  fl[3] / 50, fl[4] / 40, fl[5] / 1045,
-                  fl[6] / 9999, fl[7] / 9, fl[8] / 200,
-                  fl[9] / 360, fl[10] / 50, fl[11] / 50,
-                  fl[12] / 40, fl[13] / 1045, fl[14] / 9999,
-                  fl[15] / 16000]
-
-        if use_coordinates:
-            flight.append((fl[16] + 90) / 180)
-            flight.append((fl[17] + 180) / 360)
-            flight.append((fl[18] + 90) / 180)
-            flight.append((fl[19] + 180) / 360)
+        flight = [fl[0] / 200, fl[1] / 360, fl[2] / 50, fl[3] / 50, fl[4] / 40, fl[5] / 1045, fl[6] / 9999, fl[7] / 9,
+                  fl[8] / 200, fl[9] / 360, fl[10] / 50, fl[11] / 50, fl[12] / 40, fl[13] / 1045, fl[14] / 9999,
+                  fl[15] / 16000, (fl[16] + 90) / 180, (fl[17] + 180) / 360, (fl[18] + 90) / 180, (fl[19] + 180) / 360]
 
         for runway in fl[-36:]:
             flight.append(runway / 36)
@@ -106,10 +106,16 @@ def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coord
             time_diff = el[1]
 
         if id <= 0.8 * len(data):
-            x_train.append(np.array(flight).reshape((7, 8, 1)))
+            if network_type == "cnn":
+                x_train.append(np.array(flight).reshape(input_shape))
+            else:
+                x_train.append(np.array(flight))
             y_train.append(time_diff)
         else:
-            x_test.append(np.array(flight).reshape((7, 8, 1)))
+            if network_type == "cnn":
+                x_test.append(np.array(flight).reshape(input_shape))
+            else:
+                x_test.append(np.array(flight))
             y_test.append(time_diff)
 
     x_train = np.array(x_train)
@@ -117,4 +123,4 @@ def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coord
     x_test = np.array(x_test)
     y_test = np.array(y_test)
 
-    return x_train, y_train, x_test, y_test, input_length, output_length
+    return x_train, y_train, x_test, y_test, input_shape, output_length
