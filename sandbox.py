@@ -4,7 +4,10 @@
 from data_gathering import data_controler as dc
 import numpy as np
 
-dc.data_controler("Wednesday, Oct 14", "flights2.json")
+# Start gathering data from internet.
+dc.data_controler("/Applications/chromedriver", "Wednesday, Oct 14", "flights2.json")
+
+
 """data = dp.load_data()
 x_train, y_train, x_test, y_test, input_length, output_length = dp.preprocess_for_cnn(data, original_landing_diff=False, use_coordinates=True)
 

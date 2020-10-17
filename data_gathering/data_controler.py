@@ -7,9 +7,9 @@ from data_gathering.runways_coordinates import get_runways_and_distance
 from datetime import datetime
 
 
-def data_controler(date: str, file_name: str):
+def data_controler(chromedriver_path: str, date: str, file_name: str):
 
-    pth = "/Applications/chromedriver"
+    pth = chromedriver_path
 
     airports_list = []
     with open('airports.txt') as f:

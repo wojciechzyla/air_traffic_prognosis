@@ -6,6 +6,10 @@ import json
 from data_gathering.common_functions import time_difference
 
 
+# Load data from from all flights_<number>.json files.
+# Function return list of tuples. Each tuple contains flight info,
+# information about delay calculted while gathering data, and time difference between
+# planned landing and actual landing.
 def load_data():
     i = 1
 
@@ -20,7 +24,7 @@ def load_data():
                               el["temperature_arrival"], el["dew_point_arrival"], el["pressure_arrival"],
                               el["visibility_arrival"], el["delay_departure"], el["traffic_departure"],
                               el["wind_direction_departure"], el["wind_speed_departure"], el["temperature_departure"],
-                              el["dew_point_departure"] / 40, el["pressure_departure"], el["visibility_departure"], el["distance"],
+                              el["dew_point_departure"], el["pressure_departure"], el["visibility_departure"], el["distance"],
                               el["to latitude"], el["to longitude"],
                               el["from latitude"], el["from longitude"]]
 
@@ -43,6 +47,13 @@ def load_data():
     return input_flights
 
 
+# Function makes data suitable for cnn model. User can specify what type of labels
+# should be specified by providing original_landing_diff. By default it is set to True
+# so there are 10 possible outputs corresponding to different delay ranges (check time_difference_range
+# function from data_gathering.common_functions.py). If original_landing_diff is set to False then there
+# are only 3 outputs (early, +/- 15 min to planned arrival, late). By providing use_coordinates user can
+# specify if airports coordinates should be used in machine learning.
+# Function return training and test data, and output length.
 def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coordinates: bool = True):
 
     if use_coordinates:
