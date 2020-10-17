@@ -78,7 +78,7 @@ class DestinationData:
                 planned_arrival = standardized_hour_format(data_list[0])
                 flight_number = data_list[1]
 
-            # Find element on list containing from_airport code
+            # Find element in list containing from_airport code
             from_airport = ""
             for id_list, el in enumerate(data_list):
                 if el.find("(") != -1:
@@ -107,7 +107,7 @@ class DestinationData:
                  "to_airport": to_airport, "aircraft_no": aircraft_no, "landing_time": landing_time})
 
 
-        #Go to depeartures
+        # Go to depeartures
         driver.find_element_by_xpath("//nav[@class='btn-group btn-block'][@role='group']/a[3]").click()
         driver.implicitly_wait(3)
 
@@ -247,7 +247,7 @@ class DestinationData:
                         amount_added = 1
                         traffic_was_added = True
 
-                    elif check_if_in_time_range(late_hour, departures[len(departures) - 1]["planned_departure"],departures[i]["planned_departure"]):
+                    elif check_if_in_time_range(late_hour, departures[len(departures) - 1]["planned_departure"], departures[i]["planned_departure"]):
 
                         if not traffic_was_added:
                             previously_earliest_departure = i

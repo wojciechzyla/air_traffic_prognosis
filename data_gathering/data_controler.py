@@ -24,9 +24,6 @@ def data_controler(date: str, file_name: str):
     # List for storing codes of all unique origin airports
     origin_airports_codes = []
 
-    # List for storing new flights
-    #new_flights = []
-
     try:
         with open("json/this_day_airports.json","r") as file:
             data = json.load(file)
@@ -36,7 +33,7 @@ def data_controler(date: str, file_name: str):
     except:
         print("No origin airport data from this day")
 
-
+    # Loop through all airport
     for arpt in airports_list:
         now = datetime.now()
         if now.hour == 21 and now.minute >= 10:
@@ -87,9 +84,9 @@ def data_controler(date: str, file_name: str):
                         with open("json/this_day_airports.json", "w") as file:
                             json.dump([{"airport":dest["from_airport"], "arrivals":arrivals, "departures":departures, "weather":weather}], file)
 
-                    # Get data for specific flight from origin airport
-                    origin_data = origin_airport.get_origin_data(arrivals=arrivals, departures=departures,
-                                                                 weather_departure=weather)
+                # Get data for specific flight from origin airport
+                origin_data = origin_airport.get_origin_data(arrivals=arrivals, departures=departures,
+                                                             weather_departure=weather)
 
                 # Update flight info with data from origin airport
                 dest.update(origin_data)

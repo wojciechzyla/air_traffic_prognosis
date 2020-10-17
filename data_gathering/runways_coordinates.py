@@ -226,7 +226,6 @@ def get_runways_and_distance(path_to_chromedriver:str, flights_json_data:list):
                 airports.append({"code": el["to_airport"]})
                 airports = runways_coordinates(path_to_chromedriver, airports_codes, airports)
 
-
         flights_json_data = update_flight_info(flights_json_data, airports)
 
         # Try to write to airport_data.json

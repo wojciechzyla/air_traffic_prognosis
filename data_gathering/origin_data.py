@@ -23,7 +23,7 @@ def time_difference_decorator(func:Callable) -> Callable:
             minutes = difference[difference.find(":")+1:difference.find(":")+3]
             result = 60*int(hours)+int(minutes)
         else:
-            result = func(departure,arrival)
+            result = func(departure, arrival)
         return result
     return func_wrapper
 
@@ -113,13 +113,10 @@ class OriginData:
             data_list = text_from_record.split()
             if data_list[1] == "AM" or data_list[1] == "PM":
                 arrival_hour = standardized_hour_format("{} {}".format(data_list[0], data_list[1]))
-                fl_number = data_list[2]
             else:
                 arrival_hour = standardized_hour_format(data_list[0])
-                fl_number = data_list[1]
 
-            if fl_number != flight_number:
-                arrivals.append({"arrival_hour":arrival_hour})
+            arrivals.append({"arrival_hour":arrival_hour})
 
         # Go to depeartures
         driver.find_element_by_xpath("//nav[@class='btn-group btn-block'][@role='group']/a[3]").click()

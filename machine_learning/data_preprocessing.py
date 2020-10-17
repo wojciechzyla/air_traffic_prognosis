@@ -25,9 +25,9 @@ def load_data():
                               el["from latitude"], el["from longitude"]]
 
                     for run in range(0,18):
-                        flight.append(el["to runway {}".format(run)])
+                        flight.append(int(el["to runway {}".format(run)]))
                     for run in range(0,18):
-                        flight.append(el["from runway {}".format(run)])
+                        flight.append(int(el["from runway {}".format(run)]))
 
                     time_diff = el["landing_time_difference"]
 
@@ -43,7 +43,7 @@ def load_data():
     return input_flights
 
 
-def preprocess_for_feed_forward(data: list, original_landing_diff: bool = True, use_coordinates: bool = True):
+def preprocess_for_cnn(data: list, original_landing_diff: bool = True, use_coordinates: bool = True):
 
     if use_coordinates:
         input_length = len(data[0][0])
@@ -95,10 +95,10 @@ def preprocess_for_feed_forward(data: list, original_landing_diff: bool = True, 
             time_diff = el[1]
 
         if id <= 0.8 * len(data):
-            x_train.append(np.array(flight))
+            x_train.append(np.array(flight).reshape((7, 8, 1)))
             y_train.append(time_diff)
         else:
-            x_test.append(np.array(flight))
+            x_test.append(np.array(flight).reshape((7, 8, 1)))
             y_test.append(time_diff)
 
     x_train = np.array(x_train)
