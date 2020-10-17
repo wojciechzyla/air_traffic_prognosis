@@ -63,15 +63,15 @@ Wykonywana jest pętla po wszystkich lotach przylatujących. Zapisywane są tylk
 ## Moduł origin_data.py
 
 Moduł ten zawiera klasę klasę OriginData oraz dwie funkcje będące dekoratorami funkcji z modułu common_functions.py . 
-Przy tworzeniu obiektu klasy OriginData trzeba podać ścieżkę do chromedriver, kod lotniska, datę, numer lotu, numer rejestracyjny samolotu, oraz planowaną godzinę przylotu do lotniska docelowego. Klasa ta posiada dwie metody: get_from_web() oraz get_origin_data().
+Przy tworzeniu obiektu klasy OriginData trzeba podać ścieżkę do chromedriver, kod lotniska, datę, numer lotu, numer rejestracyjny samolotu, oraz planowaną godzinę przylotu do lotniska docelowego. Klasa ta posiada dwie metody: get_from_web() oraz get_origin_data().<br /><br />
 
 **Metoda get_from_web():**
 
-Najpierw skrypt na serwisie flightradar24.com wchodzi na podstronę z historią lotów danego samolotu. Następnie jest sprawdzane z jakiego lotniska przyleciał i skrypt wchodzi na podstronę tego lotniska. Z zakładki Arrivals są zbierane jedynie godziny przylotów poszczególnych samolotów. Tak samo jest z lotami odlatującymi w zakładce Departures. Z zakładki Weather są zbierane dane dotyczące pogody w danym dniu. Metoda zwraca krotkę zwierającą listy arrivals, departures, weather.
+Najpierw skrypt na serwisie flightradar24.com wchodzi na podstronę z historią lotów danego samolotu. Następnie jest sprawdzane z jakiego lotniska przyleciał i skrypt wchodzi na podstronę tego lotniska. Z zakładki Arrivals są zbierane jedynie godziny przylotów poszczególnych samolotów. Tak samo jest z lotami odlatującymi w zakładce Departures. Z zakładki Weather są zbierane dane dotyczące pogody w danym dniu. Metoda zwraca krotkę zwierającą listy arrivals, departures, weather.<br /><br />
 
 **Metoda get_origin_data(arrivals, departures, weather_departure):**
 
-Najpierw na serwisie flightradar24.com zostaje włączona podstrona z historią lotów danego samolotu. Znajdywany jest rekord z interesującym nas lotem. Skrypt sprawdza planowaną i prawdziwą godzinę przylotu na poprzednie lotnisko aby obliczyć czy już wtedy nie był opóźniony. Następnie obliczana jest ilość samolotów przylatujących i odlatujących w okresie czasu +/- 30 min od planowanej godziny wylotu tak samo jak warunki pogodowe w tym oknie czasowym. Metoda zwraca słownik z informacjami o pogodzie i ruchu w godzinie odlotu oraz informacja o opóźnieniu w poprzednim locie.
+Najpierw na serwisie flightradar24.com zostaje włączona podstrona z historią lotów danego samolotu. Znajdywany jest rekord z interesującym nas lotem. Skrypt sprawdza planowaną i prawdziwą godzinę przylotu na poprzednie lotnisko aby obliczyć czy już wtedy nie był opóźniony. Następnie obliczana jest ilość samolotów przylatujących i odlatujących w okresie czasu +/- 30 min od planowanej godziny wylotu tak samo jak warunki pogodowe w tym oknie czasowym. Metoda zwraca słownik z informacjami o pogodzie i ruchu w godzinie odlotu oraz informacja o opóźnieniu w poprzednim locie.<br /><br />
 
 ## Moduł common_functions.py
 
@@ -79,15 +79,15 @@ Moduł zawiera funkcje używane w innych modułach. W komentarzach w kodzie jest
 
 ## Moduł runways_coordinates.py
 
-W module znajdują się funkcje odpowiedzialne za wyszukiwanie informacji o współrzędnych oraz ilości i kierunkach pasów startowych na lotniskach. Znajduje się tu również kilka pomocniczych funkcji, których działanie można zrozumieć dzięki komentarzom w kodzie źródłowym.
+W module znajdują się funkcje odpowiedzialne za wyszukiwanie informacji o współrzędnych oraz ilości i kierunkach pasów startowych na lotniskach. Znajduje się tu również kilka pomocniczych funkcji, których działanie można zrozumieć dzięki komentarzom w kodzie źródłowym.<br /><br />
 
 **Funkcja runways_coordinates(path_to_chromedriver, airports_codes:, airports):**
 
-Funkcja ta dla każdego lotniska z listy airports_codes wyszukuje na Wikipedii informacji o pasach startowych oraz współrzędnych lotniska. Następnie te dane są dodawane do lotnisk w liście airports. Zwracana zostaje zaktualizowana lista airports.
+Funkcja ta dla każdego lotniska z listy airports_codes wyszukuje na Wikipedii informacji o pasach startowych oraz współrzędnych lotniska. Następnie te dane są dodawane do lotnisk w liście airports. Zwracana zostaje zaktualizowana lista airports.<br /><br />
 
 **Funkcja update_flight_info(flight_json_data, airports):**
 
-Funkcja ta dla każdego lotu z listy flight_json_data dodaje informacje dotyczące lotniska początkowego i lotniska docelowego. Te informacje to współrzędne, kierunki pasów startowych oraz dystans między dwoma lotniskami Zwracana zostaje zaktualizowana lista flight_json_data.
+Funkcja ta dla każdego lotu z listy flight_json_data dodaje informacje dotyczące lotniska początkowego i lotniska docelowego. Te informacje to współrzędne, kierunki pasów startowych oraz dystans między dwoma lotniskami Zwracana zostaje zaktualizowana lista flight_json_data.<br /><br />
 
 **Funkcja get_runways_and_distance(path_to_chromedriver, flights_json_data):**
 
