@@ -1,42 +1,51 @@
 # air_traffic_prognosis
 
-Packages
+## Packages
 
 data_gathering - web scrapping w celu pobrania danych o lotach i zapisywanie ich do plików json
 machine_learning - preprocessing danych z plików json oraz tworzenie modeli sieci neuronowych
 
-Package data_gathering
+## Package data_gathering
 
 Package ten zawiera następujące moduły:
 
-data_controler.py
-common_functions.py
-destination_data.py
-origin_data.py
-runways_coordinates.py
+*data_controler.py
+*common_functions.py
+*destination_data.py
+*origin_data.py
+*runways_coordinates.py
 
-Moduł data_controler.py
 
-Jest on odpowiedzialny za wywoływanie funkcji z innych modułów. Stanowi on swego rodzaju interfejs użytkownika. Funkcja data_controler przyjmuje dwa parametry: 
 
-datę w formacie takim jak na liście przylotów/odlotów na stronie www.flightradar24.com           (na przykład: “Tuesday, Oct 13”), 
-nazwa pliku do jakiego będą zapisywane loty (na przykład “flights1.json”).
+# Moduł data_controler.py
+
+Jest on odpowiedzialny za wywoływanie funkcji z innych modułów. Stanowi on swego rodzaju interfejs użytkownika. 
+Funkcja data_controler przyjmuje dwa parametry: 
+
+*datę w formacie takim jak na liście przylotów/odlotów na stronie www.flightradar24.com (na przykład: “Tuesday, Oct 13”),
+
+*nazwa pliku do jakiego będą zapisywane loty (na przykład “flights1.json”).
 
 Z pliku airports.txt są wczytywane kody lotnisk, z których program będzie miał pobrać dane. 
 Jeżeli program był już włączany danego dnia to w pliku this_day_airports.json znajdują się dane na temat pogody i ruchu lotniczego lotnisk, które program zdążył sprawdzić. Pomaga to zaoszczędzić czas gdyż nie trzeba kilkukrotnie pobierać ze strony danych dla tego samego lotniska.
 
-W pętli przechodzącej po lotniskach są wykonywane następujące czynności: 
-Tworzony jest obiekt klasy DestinationData z modułu destination_data.py. Jego atrybut dest_data jest listą lotów przylatujących na dane lotnisko. Każdy lot zawiera informacje o planowanej godzinie przylotu, prawdziwej godzinie przylotu, numerze lotu, warunkach pogodowych oraz operacjach lotniczych panujących w oknie czasu +/- 30min od planowanej godziny przylotu, opóźnieniu. 
-Dla każdego lotniska jest wykonywana pętla po przylatujących lotach. 
-Dla każdego lotu jest tworzony obiekt klasy OriginData z modułu origin_data.py. 
-Sprawdzane jest, czy lotnisko, z którego samolot przyleciał już wystąpiło danego dnia. Jeśli tak, to dane na temat ruchu na lotnisku jak i i pogody są pobierane ze zmiennej przechowującej dane z this_day_airports.json. W przeciwnym razie jest wywoływana metoda get_from_web() obiektu klasy OriginData w celu pobrania tych danych z internetu. Następnie dane pobrane przy pomocy tej metody są zapisywane do pliku this_day_airports.json.
+W pętli przechodzącej po lotniskach są wykonywane następujące czynności:
+*Tworzony jest obiekt klasy DestinationData z modułu destination_data.py. Jego atrybut dest_data jest listą lotów przylatujących na dane lotnisko. Każdy lot zawiera informacje o planowanej godzinie przylotu, prawdziwej godzinie przylotu, numerze lotu, warunkach pogodowych oraz operacjach lotniczych panujących w oknie czasu +/- 30min od planowanej godziny przylotu, opóźnieniu. 
 
-Po wywołaniu metody get_origin_data() obiektu klasy OriginData są obliczane oraz zwracane ruch oraz pogoda na lotnisku początkowym w oknie czasu +/- 30min od planowanego wylotu samolotu i informacja czy samolot był opóźniony przy poprzednim locie.  
-Dane na temat lotu są aktualizowane o dane z lotniska początkowego. 
-Na koniec dane lotu są aktualizowane o ilości oraz kierunek pasów startowych na lotnisku początkowym i docelowym, współrzędne geograficzne obu lotnisk oraz dystans między lotniskami.
+*Dla każdego lotniska jest wykonywana pętla po przylatujących lotach. 
+
+  *Dla każdego lotu jest tworzony obiekt klasy OriginData z modułu origin_data.py. 
+
+  *Sprawdzane jest, czy lotnisko, z którego samolot przyleciał już wystąpiło danego dnia. Jeśli tak, to dane na temat ruchu na lotnisku jak i i pogody są pobierane ze zmiennej przechowującej dane z this_day_airports.json. W przeciwnym razie jest wywoływana metoda get_from_web() obiektu klasy OriginData w celu pobrania tych danych z internetu. Następnie dane pobrane przy pomocy tej metody są zapisywane do pliku this_day_airports.json.
+
+*Po wywołaniu metody get_origin_data() obiektu klasy OriginData są obliczane oraz zwracane ruch oraz pogoda na lotnisku początkowym w oknie czasu +/- 30min od planowanego wylotu samolotu i informacja czy samolot był opóźniony przy poprzednim locie.  
+
+*Dane na temat lotu są aktualizowane o dane z lotniska początkowego. 
+
+*Na koniec dane lotu są aktualizowane o ilości oraz kierunek pasów startowych na lotnisku początkowym i docelowym, współrzędne geograficzne obu lotnisk oraz dystans między lotniskami.
 
 
-Moduł destination_data.py
+# Moduł destination_data.py
 
 Moduł ten zawiera klasę DestinationData. Przy tworzeniu obiektu trzeba podać następujące dane: ścieżkę do chromedriver, kod lotniska oraz datę.
 W metodzie __init__ są wywoływane dwie metody klasowe. Pierwsza z nich get_destination_airport_data() zwraca krotkę z listą przylotów, listą odlotów oraz listą z danymi pogodowymi. Druga metoda destination_data() zwraca listę z informacjami o przylatujących lotach (pogodzie, ruchu lotniczym w momencie przylotu) w oparciu o dane zebrane przez metodę get_destination_airport_data().
