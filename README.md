@@ -1,5 +1,7 @@
 # air_traffic_prognosis
 Celem tego projektu jest nauczenie sieci neuronowej przewidywać czy samolot przyleci przed czasem, na czas czy spóźni się. Dane są zbierane z internetu ze strony flightradar24.com oraz Wikipedii. 
+
+Na razie nie zamieszczam nauczonego modelu gdyż ze względu na wciąż niewystarczającą ilość danych przykładowe modele osiągają dokładność w poprawnym rozpoznaniu czy samolot spóźni się, przyleci na czas lub przed czasem rzędu 60%.
 # Korzystanie ze skryptu
 
 Aby uruchomić zbieranie danych o samolotach najpierw należy w pliku airports.txt wpisać kody IATA lotnisk oddzielone spacją bez żadnych dodatkowych znaków. Jeśli skrypt jest uruchamiany po raz pierwszy dla podanej daty należy upewnić się, że plik this_day_airports.json jest wyczyszczony i w razie potrzeby usunąć jego zawartość. Następnie, należy wywołać funkcję data_gathering.data.controler.data_controler oraz jako argumenty podać ścieżkę do pliku chromedriver, datę w odpowiednim formacie (na przykład "Wednesday, Oct 14”) oraz plik do którego należy zapisać dane (na przykład “flights1.json”). Wszystkie pliki z rozszerzeniem .json znajdują się w folderze json.
