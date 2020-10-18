@@ -6,12 +6,12 @@ Aby uruchomić zbieranie danych o samolotach najpierw należy w pliku airports.t
 
 Aby rozpocząć proces uczenia sieci, najpierw należy załadować dane za pomocą funkcji machine_learning.data_preprocessing.load_data a następnie załadowane dane przekazać do odpowiedniej funkcji z modułu data_preprocessing w zależności od rodzaju modelu jaki będzie stosowany (w module data_preprocessing znajdują się komentarze wyjaśniające działanie funkcji). Moduł models.py zawiera natomiast funkcje zwracające konkretne modele sieci neuronowych.  
 
-# Packages
+# Paczki
 
 * data_gathering - web scrapping w celu pobrania danych o lotach i zapisywanie ich do plików json
 * machine_learning - preprocessing danych z plików json oraz tworzenie modeli sieci neuronowych
 
-# Package data_gathering
+# Paczka data_gathering
 
 Package ten zawiera następujące moduły:
 
@@ -99,7 +99,7 @@ Jeśli nie udało się odczytać danych z pliku airport_data.json to funkcja run
 
 Funkcja zwraca zaktualizowaną listę flights_json_data.
 
-# Package machine_learning
+# Paczka machine_learning
 
 Package ten zawiera następujące moduły:
 * data_preprocessing.py
