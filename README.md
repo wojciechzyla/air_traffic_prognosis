@@ -6,12 +6,9 @@ Na razie nie zamieszczam nauczonego modelu gdyż ze względu na wciąż niewysta
 
 Aby uruchomić zbieranie danych o samolotach najpierw należy w pliku airports.txt wpisać kody IATA lotnisk oddzielone spacją bez żadnych dodatkowych znaków. Jeśli skrypt jest uruchamiany po raz pierwszy dla podanej daty należy upewnić się, że plik this_day_airports.json jest wyczyszczony i w razie potrzeby usunąć jego zawartość. Następnie, należy wywołać funkcję data_gathering.data.controler.data_controler oraz jako argumenty podać ścieżkę do pliku chromedriver, datę w odpowiednim formacie (na przykład "Wednesday, Oct 14”) oraz plik do którego należy zapisać dane (na przykład “flights1.json”). Wszystkie pliki z rozszerzeniem .json znajdują się w folderze json.
 
-Aby rozpocząć proces uczenia sieci, najpierw należy załadować dane za pomocą funkcji machine_learning.data_preprocessing.load_data a następnie załadowane dane przekazać do odpowiedniej funkcji z modułu data_preprocessing w zależności od rodzaju modelu jaki będzie stosowany (w module data_preprocessing znajdują się komentarze wyjaśniające działanie funkcji). Moduł models.py zawiera natomiast funkcje zwracające konkretne modele sieci neuronowych.  
-
 # Paczki
 
 * data_gathering - web scrapping w celu pobrania danych o lotach i zapisywanie ich do plików json
-* machine_learning - preprocessing danych z plików json oraz tworzenie modeli sieci neuronowych
 
 # Paczka data_gathering
 
@@ -101,16 +98,3 @@ Jeśli nie udało się odczytać danych z pliku airport_data.json to funkcja run
 
 Funkcja zwraca zaktualizowaną listę flights_json_data.
 
-# Paczka machine_learning
-
-Package ten zawiera następujące moduły:
-* data_preprocessing.py
-* models.py
-
-## Moduł data_preprocessing.py
-
-Moduł ten zawiera funkcje dokonujące standaryzacji wartości zmiennych wprowadzanych do sieci neuronowej tak, aby miały mieściły się one w przedziale [0-1]. Następnie funkcje zmieniają listy na tablice ndarray o odpowiednich kształtach w zależności od tego, dla jakiego rodzaju sieci neuronowej są przygotowywane te dane.
-
-## Moduł data_preprocessing.py
-
-Moduł ten zwiera funkcje zwracające konkretne modele sieci neuronowych
