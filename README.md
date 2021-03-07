@@ -1,3 +1,5 @@
+Machine learning models can be seen in airtraffic.ipynb notebook
+
 # air_traffic_prognosis
 Celem tego projektu jest nauczenie sieci neuronowej przewidywać czy samolot przyleci przed czasem, na czas czy spóźni się. Dane są zbierane z internetu ze strony flightradar24.com oraz Wikipedii. 
 
